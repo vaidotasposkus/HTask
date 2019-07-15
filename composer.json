@@ -4,7 +4,12 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
+            "GildedRose\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "GildedRoseTest\\": "test/"
         }
     }
 }
