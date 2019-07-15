@@ -21,31 +21,19 @@ Getting Started
 To begin the kata, install the dependencies and run `phpunit`:
 
 ```
-cd php7
+cd HTask
 composer install
 vendor/bin/phpunit
 ```
 
-If the "install" command does not work, try running `composer update` instead.
-This will tell composer that it has permission to look for a newer version of
-its dependencies.
+## Compliance with requirements:
 
-If things are still not cooperating, you can try this extreme approach:
+ * 'Item' class is do not alter.
+ * 'Item' class property is also do not alter.
+ * All tests pass after code refactoring.
+ 
+## Changes
 
-```
-composer remove phpunit/phpunit
-composer require phpunit/phpunit
-```
-
-To exercise the code outside of phpunit, for example to visually confirm that it is working,
-use the `texttest_fixture` script:
-
-```
-php fixtures/texttest_fixture.php
-```
-
-Tips
-----
-
-PHPUnit has a very thorough reference manual. It would be particularly useful to explore the
-[Data Providers](https://phpunit.readthedocs.io/en/8.1/writing-tests-for-phpunit.html#data-providers) section.
+ * Items was seperated by them type.
+ * Every Item has updateQuality method where quality is updating by some rules which was in requirements
+ 
