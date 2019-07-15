@@ -1,65 +1,50 @@
 <?php
 
-namespace App;
+namespace GildedRose;
 
-final class GildedRose {
-
+class GildedRose
+{
+    /** @var array */
     private $items = [];
 
-    public function __construct($items) {
+    /** @var array */
+    protected static $itemClassMap = [
+        'Aged Brie' => Items\AgedBrie::class,
+        'Sulfuras, Hand of Ragnaros' => Items\Sulfuras::class,
+        'Backstage passes to a TAFKAL80ETC concert' => Items\BackstagePass::class,
+        'Conjured Mana Cake' => Items\Conjured::class
+    ];
+
+    /**
+     * GildedRose constructor.
+     */
+    public function __construct(array $items)
+    {
         $this->items = $items;
     }
 
-    public function updateQuality() {
+    /**
+     * Update Item quality
+     */
+    public function updateQuality(): void
+    {
         foreach ($this->items as $item) {
-            if ($item->name != 'Aged Brie' and $item->name != 'Backstage passes to a TAFKAL80ETC concert') {
-                if ($item->quality > 0) {
-                    if ($item->name != 'Sulfuras, Hand of Ragnaros') {
-                        $item->quality = $item->quality - 1;
-                    } else {
-                        $item->quality = 80;
-                    }
-                }
-            } else {
-                if ($item->quality < 50) {
-                    $item->quality = $item->quality + 1;
-                    if ($item->name == 'Backstage passes to a TAFKAL80ETC concert') {
-                        if ($item->sell_in < 11) {
-                            if ($item->quality < 50) {
-                                $item->quality = $item->quality + 1;
-                            }
-                        }
-                        if ($item->sell_in < 6) {
-                            if ($item->quality < 50) {
-                                $item->quality = $item->quality + 1;
-                            }
-                        }
-                    }
-                }
-            }
-            
-            if ($item->name != 'Sulfuras, Hand of Ragnaros') {
-                $item->sell_in = $item->sell_in - 1;
-            }
-            
-            if ($item->sell_in < 0) {
-                if ($item->name != 'Aged Brie') {
-                    if ($item->name != 'Backstage passes to a TAFKAL80ETC concert') {
-                        if ($item->quality > 0) {
-                            if ($item->name != 'Sulfuras, Hand of Ragnaros') {
-                                $item->quality = $item->quality - 1;
-                            }
-                        }
-                    } else {
-                        $item->quality = $item->quality - $item->quality;
-                    }
-                } else {
-                    if ($item->quality < 50) {
-                        $item->quality = $item->quality + 1;
-                    }
-                }
-            }
+            $item->update();
         }
+    }
+
+    /**
+     * Load item class by his name
+     */
+    public static function getClassByItemName(string $itemName): string
+    {
+        $class = Items\StandardItem::class;
+
+        if (isset(static::$itemClassMap[$itemName])) {
+            $class = static::$itemClassMap[$itemName];
+        }
+
+        return $class;
     }
 }
 

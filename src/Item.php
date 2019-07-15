@@ -1,8 +1,8 @@
 <?php
 
-namespace App;
+namespace GildedRose;
 
-final class Item {
+class Item {
 
     public $name;
     public $sell_in;
